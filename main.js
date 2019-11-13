@@ -1,16 +1,16 @@
 'use strict';
 
 class Game {
-	constructor (event) {
+	constructor(event) {
 		this.target = event.target;
 		this.arrClicks = [];
 	}
 
 	drowSymbols() {
-		if(this.target.tagName === "DIV" && this.target.innerHTML === ''){
-			if (numberOfClicks%2 === 0){
+		if (this.target.tagName === "DIV" && this.target.innerHTML === '') {
+			if (numberOfClicks % 2 === 0) {
 				this.target.innerHTML = "<span class='crosses'></span>";
-			}else{
+			} else {
 				this.target.innerHTML = "<span class='noughts'></span>";
 			};
 			numberOfClicks++;
@@ -21,11 +21,11 @@ class Game {
 		let gameCell = document.getElementsByClassName('game-field__cell');
 		let arr = [];
 		[].forEach.call(gameCell, function (element) {
-			if( !!(element.innerHTML.indexOf('noughts') + 1)){
+			if (!!(element.innerHTML.indexOf('noughts') + 1)) {
 				arr.push(0);
-			}else if(!!(element.innerHTML.indexOf('crosses') + 1)){
+			} else if (!!(element.innerHTML.indexOf('crosses') + 1)) {
 				arr.push(1);
-			}else{
+			} else {
 				arr.push(NaN);
 			};
 		});
@@ -33,51 +33,51 @@ class Game {
 	}
 
 	checkWinner() {
-		if ( this.checkLine() || this.checkColumn() || this.checkHorizontally()){
-			if (numberOfClicks % 2 == 0){
+		if (this.checkLine() || this.checkColumn() || this.checkHorizontally()) {
+			if (numberOfClicks % 2 == 0) {
 				this.showWinner('O won!');
-			}else {
+			} else {
 				this.showWinner('X won!');
 			}
-		}else if(numberOfClicks >= 9){
+		} else if (numberOfClicks >= 9) {
 			this.showWinner('Draw');
 		};
 	}
 
 	showWinner(name) {
-		setTimeout(function(){
+		setTimeout(function () {
 			alert(name);
 			window.location.reload();
 		}, 100);
 	}
 
-	checkLine(){
-		for (let i = 0; i < this.arrClicks.length; i += 3){
-			if (this.arrClicks[i] === this.arrClicks[i+1] && 
-				  this.arrClicks[i] === this.arrClicks[i+2]){
+	checkLine() {
+		for (let i = 0; i < this.arrClicks.length; i += 3) {
+			if (this.arrClicks[i] === this.arrClicks[i + 1] &&
+				this.arrClicks[i] === this.arrClicks[i + 2]) {
 				return true;
 			};
 		};
 	}
 
-	checkColumn(){
-		for (let i = 0; i <= 2; i++){
-			if (this.arrClicks[i] === this.arrClicks[i+3] && 
-				  this.arrClicks[i] === this.arrClicks[i+6]){
+	checkColumn() {
+		for (let i = 0; i <= 2; i++) {
+			if (this.arrClicks[i] === this.arrClicks[i + 3] &&
+				this.arrClicks[i] === this.arrClicks[i + 6]) {
 				return true;
 			};
 		};
 	}
 
-	checkHorizontally(){
-		if(this.arrClicks[0] === this.arrClicks[4] && 
-			 this.arrClicks[0] === this.arrClicks[8]){
+	checkHorizontally() {
+		if (this.arrClicks[0] === this.arrClicks[4] &&
+			this.arrClicks[0] === this.arrClicks[8]) {
 			return true;
-		}else if(this.arrClicks[2] === this.arrClicks[4] && 
-			       this.arrClicks[2] === this.arrClicks[6]){
+		} else if (this.arrClicks[2] === this.arrClicks[4] &&
+			this.arrClicks[2] === this.arrClicks[6]) {
 			return true;
 		};
-	};	
+	};
 };
 
 
@@ -91,19 +91,19 @@ class Bot extends Game {
 
 	botStep() {
 		let arrBotSteps = [];
-		arr.forEach(function(element, index){
+		arr.forEach(function (element, index) {
 			if (isNaN(element)) {
 				arrBotSteps.push(index);
 			};
-		this.step = arrBotSteps[Math.floor(Math.random()*arrBotSteps.length)];
+			this.step = arrBotSteps[Math.floor(Math.random() * arrBotSteps.length)];
 		});
 	}
 
 	drowBotStep() {
 		let cells = document.getElementsByClassName('game-field__cell');
-		if (numberOfClicks%2 === 0){
+		if (numberOfClicks % 2 === 0) {
 			cells[this.step].innerHTML = "<span class='crosses'></span>";
-		}else{
+		} else {
 			cells[this.step].innerHTML = "<span class='noughts'></span>";
 		}
 		numberOfClicks++;
@@ -113,11 +113,11 @@ class Bot extends Game {
 
 let gameField = document.getElementById('field-js');
 let numberOfClicks = 0;
-gameField.addEventListener('click', function(event){
+gameField.addEventListener('click', function (event) {
 	let playGame = new Game(event);
 	playGame.drowSymbols();
 	playGame.getCellValues();
-	if (numberOfClicks > 4){
+	if (numberOfClicks > 4) {
 		playGame.checkWinner();
 	}
 })

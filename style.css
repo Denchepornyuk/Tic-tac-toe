@@ -1,41 +1,41 @@
-body{
+body {
 	box-sizing: border-box;
 	background-color: #13bdac;
 	max-height: 100vh;
 	font-family: sans-serif;
 }
 
-.tic__title{
+.tic__title {
 	text-align: center;
 	font-size: 30px;
 	text-transform: uppercase;
 }
 
-.tic__game-field{
+.tic__game-field {
 	margin: auto;
 	width: 600px;
 	height: 540px;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 180px);
+	grid-template-rows: repeat(3, 180px);
 }
 
-div[class*='center--']{
+div[class*='center--'] {
 	border-top: 10px solid #0DA092;
 	border-bottom: 10px solid #0DA092;
 }
 
-div[class*='--center']{
+div[class*='--center'] {
 	border-left: 10px solid #0DA092;
-	border-right: 10px solid #0DA092;	
+	border-right: 10px solid #0DA092;
 }
 
-.game-field__cell{
-  position: relative;
-  cursor: pointer;
+.game-field__cell {
+	position: relative;
+	cursor: pointer;
 }
 
-.crosses{
+.crosses {
 	background-image: url('./images/times-solid.svg');
 	background-position: center;
 	background-repeat: no-repeat;
@@ -47,7 +47,7 @@ div[class*='--center']{
 	animation-duration: .5s;
 }
 
-.noughts{
+.noughts {
 	background-image: url('./images/circle-regular.svg');
 	background-position: center;
 	background-repeat: no-repeat;
@@ -60,7 +60,12 @@ div[class*='--center']{
 	animation-duration: .5s;
 }
 
-@keyframes symbol-animation{
-	from{opacity: 0}
-	to{opacity: 1}
+@keyframes symbol-animation {
+	from {
+		opacity: 0
+	}
+
+	to {
+		opacity: 1
+	}
 }
