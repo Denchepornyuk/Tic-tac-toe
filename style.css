@@ -1,26 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-	box-sizing: border-box;
-	background-color: #13bdac;
-	max-height: 100vh;
-	font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #13bdac;
+  max-height: 100vh;
+  font-family: sans-serif;
 }
 
-.tic__title {
-	text-align: center;
-	font-size: 30px;
-	text-transform: uppercase;
+#game {
+  text-align: center;
 }
 
-.tic__game-field {
-	margin: auto;
-	width: 600px;
-	height: 540px;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(3, 180px);
+.game__title {
+  font-size: 30px;
+  text-transform: uppercase;
 }
 
-div[class*='center--'] {
+.game__field {
+  margin: auto;
+  width: 600px;
+  height: 545px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 180px);
+}
+
+.field__cell {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid black;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  animation-name: symbol-animation;
+  animation-duration: .5s;
+}
+
+.crosses {
+  background-image: url('./images/times-solid.svg');
+}
+
+.noughts {
+	background-image: url('./images/circle-regular.svg');
+  background-size: 70%;
+}
+
+@keyframes symbol-animation {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+/*div[class*='center--'] {
 	border-top: 10px solid #0DA092;
 	border-bottom: 10px solid #0DA092;
 }
@@ -28,44 +66,9 @@ div[class*='center--'] {
 div[class*='--center'] {
 	border-left: 10px solid #0DA092;
 	border-right: 10px solid #0DA092;
-}
+}*/
 
-.game-field__cell {
-	position: relative;
-	cursor: pointer;
-}
 
-.crosses {
-	background-image: url('./images/times-solid.svg');
-	background-position: center;
-	background-repeat: no-repeat;
-	position: absolute;
-	top: 15%;
-	width: 100%;
-	height: 70%;
-	animation-name: symbol-animation;
-	animation-duration: .5s;
-}
 
-.noughts {
-	background-image: url('./images/circle-regular.svg');
-	background-position: center;
-	background-repeat: no-repeat;
-	position: absolute;
-	top: 15%;
-	width: 100%;
-	height: 70%;
-	border: none;
-	animation-name: symbol-animation;
-	animation-duration: .5s;
-}
 
-@keyframes symbol-animation {
-	from {
-		opacity: 0
-	}
 
-	to {
-		opacity: 1
-	}
-}
