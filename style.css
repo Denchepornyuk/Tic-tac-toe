@@ -1,0 +1,98 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #13bdac;
+  max-height: 100vh;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#game {
+  text-align: center;
+}
+
+.game__title {
+  font-size: 33px;
+  text-transform: uppercase;
+}
+
+.game__field {
+  margin: auto;
+  width: 600px;
+  height: 545px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 180px);
+}
+
+.field__cell {
+  cursor: pointer;
+  border: 2px solid black;
+  position: relative;
+}
+
+.field__cell:nth-child(1),
+.field__cell:nth-child(2),
+.field__cell:nth-child(3) {
+  border-top: none;
+}
+
+.field__cell:nth-child(1),
+.field__cell:nth-child(4),
+.field__cell:nth-child(7) {
+  border-left: none;
+}
+
+.field__cell:nth-child(7),
+.field__cell:nth-child(8),
+.field__cell:nth-child(9) {
+  border-bottom: none;
+}
+
+.field__cell:nth-child(3),
+.field__cell:nth-child(6),
+.field__cell:nth-child(9) {
+  border-right: none;
+}
+
+.crosses {
+  background-image: url('./images/times-solid.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: symbol 0.5s;
+  width: 100%;
+  height: 100%;
+}
+
+.noughts {
+	background-image: url('./images/circle-regular.svg');
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: symbol 0.5s;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes symbol {
+  from {opacity: 0;};
+  to {opacity: 1;};
+}
+
+/*div[class*='center--'] {
+	border-top: 10px solid #0DA092;
+	border-bottom: 10px solid #0DA092;
+}
+
+div[class*='--center'] {
+	border-left: 10px solid #0DA092;
+	border-right: 10px solid #0DA092;
+}*/
+
+
+
+
+
