@@ -1,199 +1,112 @@
 'use strict';
 
-const game = document.getElementById('game');
-
-document.addEventListener("DOMContentLoaded", (event) => {
-  const createGameField = new GameField(event);
-  createGameField.createGameTitle();
-  createGameField.createGameField();
-
-  // field.addEventListener('click', drowSymbols(event));
-});
-
-
-
 class Game {
   constructor() {
-    this.gameArr = ["X", null, null, null, "O", null, null, null, "X"];
-  }
-}
-
-class GameField extends Game {
-  constructor(gameArr) {
-    super(gameArr);
-    this.target = event.target;
-    this.gameName = 'Tic-tac-toe';
-    this.fieldSize = 9;
+    this.symbolArray = [null, null, null, null, null, null, null, null, null];
+    this.numberOfClicks = 0;
   }
 
-  createGameTitle() {
-    const gameName = this.gameName;
-    let h1 = document.createElement('h1');
-    h1.className = 'game__title';
-    h1.innerHTML = gameName;
-    game.appendChild(h1);
+  addSymbol(event) {
+    const cellClick = event.target.id;
+    if (this.symbolArray[cellClick] !== null) return '';
+
+    if (this.numberOfClicks % 2 === 0) {
+      this.drowSymbol(cellClick, 'X', 'crosses');
+    } else {
+      this.drowSymbol(cellClick, 'O', 'noughts');
+    }
+    this.numberOfClicks++;
+
+    if (this.numberOfClicks >= 5) {
+      this.checkWinner();
+    }
+  };
+
+  drowSymbol(cellClick, symbol, className) {
+    this.symbolArray.splice(cellClick, 1, symbol);
+    document.getElementById(cellClick).innerHTML =
+      `<div class="${className}"></div>`;
+  }
+
+  checkWinner() {
+    if (this.checkLine() || this.checkColumn() || this.checkHorizontally()) {
+      if (this.numberOfClicks % 2 === 0) {
+        this.showWinner('O won!');
+      } else {
+        this.showWinner('X won!');
+      }
+    } else if (this.numberOfClicks >= 9) {
+      this.showWinner('Draw');
+    };
+
+    return false;
+  };
+
+  checkLine() {
+    for (let i = 0; i < this.symbolArray.length; i += 3) {
+      if (this.symbolArray[i] === null) continue;
+      if (this.symbolArray[i] === this.symbolArray[i + 1] &&
+        this.symbolArray[i] === this.symbolArray[i + 2]) {
+          return true;
+      };
+
+    return false;
+    };
+  };
+
+  checkColumn() {
+    for (let i = 0; i <= 2; i++) {
+      if (this.symbolArray[i] === null) continue;
+      if (this.symbolArray[i] === this.symbolArray[i + 3] &&
+        this.symbolArray[i] === this.symbolArray[i + 6]) {
+          return true;
+      };
+
+      return false;
+    };
+  };
+
+  checkHorizontally() {
+    if (this.symbolArray[4] === null) return false;
+
+    if (this.symbolArray[0] === this.symbolArray[4] &&
+      this.symbolArray[0] === this.symbolArray[8]) {
+      return true;
+    } else if (this.symbolArray[2] === this.symbolArray[4] &&
+      this.symbolArray[2] === this.symbolArray[6]) {
+      return true;
+    };    
+  };
+
+  showWinner(name) {
+    setTimeout(function () {
+      alert(name);
+      window.location.reload();
+    }, 100);
   };
 
   createGameField() {
     const field = document.createElement('div');
     field.className = 'game__field';
-    for (let i = 0; i < this.fieldSize; i++) {
+    field.id = 'field';
+    for (let i = 0; i < 9; i++) {
       let div = document.createElement('div');
-      div.className = 'field__cell ' + this.addSymbol(i);
+      div.className = 'field__cell';
+      div.id = i;
       field.appendChild(div);
     }
     game.appendChild(field);
   };
-
-  addSymbol(cellNumber) {
-    switch (this.gameArr[cellNumber]) {
-      case 'X':
-          return 'crosses';
-      case 'O':
-        return 'noughts';
-      default:
-        return '';
-    }
-  };
-
-};
+}
 
 
 
+const game = document.getElementById('game');
 
+const play = new Game();
+play.createGameField();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class Game {
-// 	constructor(event) {
-// 		this.target = event.target;
-// 		this.arrClicks = [];
-// 	}
-
-// 	drowSymbols() {
-// 		if (this.target.tagName === "DIV" && this.target.innerHTML === '') {
-// 			if (numberOfClicks % 2 === 0) {
-// 				this.target.innerHTML = "<span class='crosses'></span>";
-// 			} else {
-// 				this.target.innerHTML = "<span class='noughts'></span>";
-// 			};
-// 			numberOfClicks++;
-// 		};
-// 	};
-
-// 	getCellValues() {
-// 		let gameCell = document.getElementsByClassName('game-field__cell');
-// 		let arr = [];
-// 		[].forEach.call(gameCell, function (element) {
-// 			if (!!(element.innerHTML.indexOf('noughts') + 1)) {
-// 				arr.push(0);
-// 			} else if (!!(element.innerHTML.indexOf('crosses') + 1)) {
-// 				arr.push(1);
-// 			} else {
-// 				arr.push(NaN);
-// 			};
-// 		});
-// 		this.arrClicks = arr;
-// 	}
-
-// 	checkWinner() {
-// 		if (this.checkLine() || this.checkColumn() || this.checkHorizontally()) {
-// 			if (numberOfClicks % 2 == 0) {
-// 				this.showWinner('O won!');
-// 			} else {
-// 				this.showWinner('X won!');
-// 			}
-// 		} else if (numberOfClicks >= 9) {
-// 			this.showWinner('Draw');
-// 		};
-// 	}
-
-// 	showWinner(name) {
-// 		setTimeout(function () {
-// 			alert(name);
-// 			window.location.reload();
-// 		}, 100);
-// 	}
-
-// 	checkLine() {
-// 		for (let i = 0; i < this.arrClicks.length; i += 3) {
-// 			if (this.arrClicks[i] === this.arrClicks[i + 1] &&
-// 				this.arrClicks[i] === this.arrClicks[i + 2]) {
-// 				return true;
-// 			};
-// 		};
-// 	}
-
-// 	checkColumn() {
-// 		for (let i = 0; i <= 2; i++) {
-// 			if (this.arrClicks[i] === this.arrClicks[i + 3] &&
-// 				this.arrClicks[i] === this.arrClicks[i + 6]) {
-// 				return true;
-// 			};
-// 		};
-// 	}
-
-// 	checkHorizontally() {
-// 		if (this.arrClicks[0] === this.arrClicks[4] &&
-// 			this.arrClicks[0] === this.arrClicks[8]) {
-// 			return true;
-// 		} else if (this.arrClicks[2] === this.arrClicks[4] &&
-// 			this.arrClicks[2] === this.arrClicks[6]) {
-// 			return true;
-// 		};
-// 	};
-// };
-
-
-// class Bot extends Game {
-// 	constructor(event) {
-// 		super(event);
-// 		this.target = event.target;
-// 		this.arrClicks = [];
-// 		this.step;
-// 	}
-
-// 	botStep() {
-// 		let arrBotSteps = [];
-// 		arr.forEach(function (element, index) {
-// 			if (isNaN(element)) {
-// 				arrBotSteps.push(index);
-// 			};
-// 			this.step = arrBotSteps[Math.floor(Math.random() * arrBotSteps.length)];
-// 		});
-// 	}
-
-// 	drowBotStep() {
-// 		let cells = document.getElementsByClassName('game-field__cell');
-// 		if (numberOfClicks % 2 === 0) {
-// 			cells[this.step].innerHTML = "<span class='crosses'></span>";
-// 		} else {
-// 			cells[this.step].innerHTML = "<span class='noughts'></span>";
-// 		}
-// 		numberOfClicks++;
-// 	}
-// }
-
-
-// let gameField = document.getElementById('field-js');
-// let numberOfClicks = 0;
-// gameField.addEventListener('click', function (event) {
-// 	let playGame = new Game(event);
-// 	playGame.drowSymbols();
-// 	playGame.getCellValues();
-// 	if (numberOfClicks > 4) {
-// 		playGame.checkWinner();
-// 	}
-// })
-
+const field = document.getElementById('field');
+field.addEventListener('click', (event) => {
+  play.addSymbol(event);
+})
